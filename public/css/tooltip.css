@@ -1,0 +1,33 @@
+/*
+ * Tooltip.js styles
+ */
+
+ #tooltip {
+	position:absolute;
+	background:#fff;
+	color:#284f8a;
+	padding:8px;
+	z-index:99999;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-left-color: #fff !important;
+    font-weight: 600;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#tooltip.alt-tooltip {
+	background:#490B22;
+}
+.bg-light-success {
+    background-color: #023e8a !important;
+  }
+  .bg-light-blue-v1{
+      background-color: #3d8aed !important;
+  }
+  .bg-light-blue-v2{
+      background-color: #0096c7 !important;
+  }
+  .bg-light-blue-v3{
+      background-color: #a3e0fc !important;
+  }
