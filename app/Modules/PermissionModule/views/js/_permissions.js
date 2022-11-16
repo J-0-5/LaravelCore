@@ -60,10 +60,8 @@ export default class Permissions {
             document.getElementsByClassName("configuration-role-btn");
         let configurationBtnUser =
             document.getElementsByClassName("configuration-user-btn");
-        let configurationBtnDependency =
-            document.getElementsByClassName("configuration-dependency-btn");
         let permitsLbl = document.getElementById("permits-label");
-        if (configurationBtnRole == null || configurationBtnUser == null || configurationBtnDependency == null) {
+        if (configurationBtnRole == null || configurationBtnUser == null) {
             return;
         }
         const permission = (data) => {
@@ -178,30 +176,6 @@ export default class Permissions {
                     return;
                 }
 
-                let data = response.data;
-                permission(data)
-            });
-        });
-
-        [].forEach.call(configurationBtnDependency, function (btn) {
-            btn.addEventListener("click", async () => {
-                let row = btn.parentNode.parentNode;
-
-                let parameter_id = row.id;
-                let associate = row.getAttribute("associate")
-
-                permitsLbl.innerText = `Permisos - ${row.getAttribute(
-                    "attribute-name"
-                )}`;
-
-                let form = document.getElementById("permits-form");
-                form.setAttribute("action", `/permisos/${parameter_id}?associate_to=${associate}`);
-
-                let url = `/permisos/getPermissions/${associate}/${parameter_id}`;
-                let response = await requestPermissions(url);
-                if (response.state != 200) {
-                    return;
-                }
                 let data = response.data;
                 permission(data)
             });

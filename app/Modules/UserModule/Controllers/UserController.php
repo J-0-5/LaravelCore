@@ -74,7 +74,6 @@ class UserController extends Controller
         if ($response['state'] == 200) {
             return redirect()->route('users.index')->with('success', $response['message']);
         }
-        $saveDocuments = $this->updateOrCreateContractorDocuments($request, $response['data']->id,  $response['data']->role_id);
         return redirect()->back()->withInput()->with('danger', $response['message']);
     }
 
@@ -122,7 +121,6 @@ class UserController extends Controller
         if ($response['state'] != 200) {
             return redirect()->back()->withInput()->with('danger', $response['message']);
         }
-        $saveDocuments = $this->updateOrCreateContractorDocuments($request, $response['data']->id,  $response['data']->role_id);
         return redirect()->route('users.index')->with('success', $response['message']);
     }
 

@@ -19,8 +19,6 @@ class CreateUsersTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles');
             $table->unsignedBigInteger('user_document_type')->nullable();
             $table->foreign('user_document_type')->references('id')->on('parameter_values');
-            $table->unsignedBigInteger('dependency')->nullable();
-            $table->foreign('dependency')->references('id')->on('parameter_values');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->string('name')->nullable();
             $table->string('last_name')->nullable();

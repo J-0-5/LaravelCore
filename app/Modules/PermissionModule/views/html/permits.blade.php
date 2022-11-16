@@ -20,9 +20,6 @@
                             <button class="nav-link" id="nav-user-tab" data-bs-toggle="tab" data-bs-target="#nav-user"
                                 type="button" role="tab" aria-controls="nav-user"
                                 aria-selected="false">Usuarios</button>
-                            <button class="nav-link" id="nav-dependency-tab" data-bs-toggle="tab" data-bs-target="#nav-dependency"
-                                type="button" role="tab" aria-controls="nav-dependency"
-                                aria-selected="false">Dependencias</button>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
@@ -96,34 +93,6 @@
                                             <td class="text-center">
                                                 <button {{ $user->id == 1 || Auth::user()->id != 1 ? 'disabled' : '' }}
                                                     class="btn btn-info btn-sm btn-fab btn-icon configuration-user-btn"
-                                                    data-tooltip title="Configurar">
-                                                    <i class="fa fa-cog"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade bg-white" id="nav-dependency" role="tabpanel" aria-labelledby="nav-dependency-tab">
-                            <table class="table table__contenedor">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Estado</th>
-                                        <th>Opciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($dependencies as $dependency)
-                                        <tr id="{{ $dependency->id }}" attribute-name="{{ $dependency->name }}" associate="dependencies">
-                                            <td class="text-uppercase">{{ $dependency->name }}</td>
-                                            <td>
-                                                <span class="badge badge-{{ Config::get('const.states')[$dependency->active]['color'] }} text-uppercase">{{ Config::get('const.states')[$dependency->active]['name'] }}</span>
-                                            </td>
-                                            <td class="text-center">
-                                                <button {{ $dependency->id == 1 || Auth::user()->id != 1 ? 'disabled' : '' }}
-                                                    class="btn btn-info btn-sm btn-fab btn-icon configuration-dependency-btn"
                                                     data-tooltip title="Configurar">
                                                     <i class="fa fa-cog"></i>
                                                 </button>

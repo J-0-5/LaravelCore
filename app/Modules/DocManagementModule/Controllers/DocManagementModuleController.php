@@ -10,7 +10,6 @@ class DocManagementModuleController extends Controller
 {
     protected $path = 'DocManagementModule.views.html.';
 
-
     public function index()
     {
         return view($this->path . 'index');

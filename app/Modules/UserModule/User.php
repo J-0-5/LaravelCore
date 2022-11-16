@@ -35,7 +35,6 @@ class User extends Model implements AuthenticatableContract
     protected $fillable = [
         'role_id',
         'user_document_type',
-        'dependency',
         'parent_id',
         'name',
         'last_name',
@@ -91,12 +90,7 @@ class User extends Model implements AuthenticatableContract
 
     public function getParent()
     {
-        $classes = [
-            'users' => self::class,
-            'dependencies' => ParameterValue::class,
-        ];
-        $class = $classes[$this->dependency];
-        return $this->belongsTo($class, 'parent_id');
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function getSign()
@@ -154,12 +148,6 @@ class User extends Model implements AuthenticatableContract
             $query->whereHas('getUserDocumentType', function ($query) use ($value) {
                 $query->where('name', $value);
             });
-    }
-    public function scopeWhereParentTypeId($query, $value)
-    {
-        if (!is_null($value)) {
-            $query->where('dependency', $value);
-        };
     }
     public function scopeWhereParentTypeName($query, $value)
     {
@@ -262,8 +250,6 @@ class User extends Model implements AuthenticatableContract
                     ->whereNotRoleId($request->not_role_id)
                     ->whereUserDocumentTypeId($request->user_document_type)
                     ->whereUserDocumentTypeName($request->user_document_type_name)
-                    ->whereParentTypeId($request->dependency)
-                    ->whereParentTypeName($request->dependency_name)
                     ->whereParentId($request->parent_id)
                     ->whereParentName($request->parent_name)
                     ->whereFullName($request->full_name)
@@ -307,7 +293,6 @@ class User extends Model implements AuthenticatableContract
             [
                 'role_id' => 'required|exists:roles,id',
                 'user_document_type' => 'nullable|exists:parameter_values,id',
-                'dependency' => 'nullable|exists:parameter_values,id',
                 'parent_id' => 'nullable',
                 'name' => [Rule::requiredIf($action == 'create'),],
                 'last_name' => [Rule::requiredIf($action == 'create'),],
@@ -339,7 +324,6 @@ class User extends Model implements AuthenticatableContract
             $user = $this::create([
                 'role_id' => $request->role_id,
                 'user_document_type' => $request->user_document_type,
-                'dependency' => $request->dependency,
                 'parent_id' => $request->parent_id,
                 'name' => $request->name,
                 'last_name' => $request->last_name,
@@ -352,10 +336,9 @@ class User extends Model implements AuthenticatableContract
                 'active' => $request->active ?? 1,
             ]);
 
-            if(Auth()->user()->role_id == 1 && !is_null($user->email)){
-              $m =  Mail::to($user->email)->send(new PasswordMail($request->password));
-
-            }
+            // if(Auth()->user()->role_id == 1 && !is_null($user->email)){
+            //   $m =  Mail::to($user->email)->send(new PasswordMail($request->password));
+            // }
             return $this->respond(200, $user, null, 'Usuario creado exitosamente');
         } catch (\Exception $e) {
             return $this->respond(500, [], $e->getMessage(), 'Error al crear usuario');
@@ -379,7 +362,6 @@ class User extends Model implements AuthenticatableContract
             $user->update([
                 'role_id' => $request->role_id ?? $user->role_id,
                 'user_document_type' => $request->user_document_type ?? $user->user_document_type,
-                'dependency' => $request->dependency ?? $user->dependency,
                 'parent_id' => $request->parent_id ?? $user->parent_id,
                 'name' => $request->name ?? $user->name,
                 'last_name' => $request->last_name ?? $user->last_name,
